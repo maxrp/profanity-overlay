@@ -2,33 +2,27 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=4
+EAPI=5
 
-inherit eutils
+inherit autotools eutils
 
 DESCRIPTION="A simple, lightweight C library for writing XMPP clients"
 HOMEPAGE="http://strophe.im/libstrophe/"
-SRC_URI="mirror://github/metajack/${PN}/${P}-snapshot.tar.gz"
+SRC_URI="https://github.com/strophe/${PN}/archive/${PV}.tar.gz"
 
 LICENSE="MIT GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 x86"
 IUSE="doc xml"
 
 RDEPEND="xml? ( dev-libs/libxml2 )
 		!xml? ( dev-libs/expat )
-		dev-libs/openssl"
+		dev-libs/openssl:0"
 DEPEND="${RDEPEND}
 		doc? ( app-doc/doxygen )"
 
-S="${WORKDIR}/${P}-snapshot"
-
 src_prepare() {
-		epatch "${FILESDIR}"/${PN}-xmpp-conn-disable-tls.patch
-		epatch "${FILESDIR}"/${PN}-fix-memory-leaks.patch
-		epatch "${FILESDIR}"/${PN}-fix-memory-leak-in-logging.patch
-		epatch "${FILESDIR}"/${PN}-fix-crash-on-non-latin1.patch
-		epatch "${FILESDIR}"/${PN}-xml-escape.patch
+		eautoreconf
 }
 
 src_configure() {
@@ -37,14 +31,10 @@ src_configure() {
 		use xml || econf
 }
 
-src_compile() {
-		emake
+src_install() {
+		emake DESTDIR="${D}" install
 		if use doc; then
 			doxygen || die
 		fi
-}
-
-src_install() {
-		einstall
 		use doc && dohtml -r docs/html/*
 }
