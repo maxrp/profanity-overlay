@@ -1,2 +1,0 @@
-# Mask all our packages by default
-*/*
