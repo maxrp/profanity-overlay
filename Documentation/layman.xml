@@ -1,10 +1,10 @@
 <layman>
-    <overlay type="git" src="https://github.com/megabaks/stuff.git" contact="https://github.com/megabaks" status="unofficial" name="stuff">
+	<overlay type="git" src="https://github.com/maxrp/profanity-overlay.git" contact="https://github.com/maxrp" status="unofficial" name="profanity-overlay">
 	<link>
-	https://github.com/megabaks/stuff
+		https://github.com/maxrp/profanity-overlay
 	</link>
 	<description>
-	hz
+		A Portage overlay for Profanity (https://profanity.im) and libstrophe (http://strophe.im/libstrophe/).
 	</description>
     </overlay>
 </layman>

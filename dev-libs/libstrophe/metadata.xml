@@ -2,8 +2,8 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer>
-		<email>pasis.ua@gmail.com</email>
-		<name>Dmitry Podgorny</name>
+		<email>maxp@trystero.is</email>
+		<name>Max R.D. Parmer</name>
 	</maintainer>
 	<use>
 		<flag name='doc'>Install doxygen documentation</flag>
