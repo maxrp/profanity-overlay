@@ -2,47 +2,47 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=4
+EAPI=6
 
-EGIT_REPO_URI="git://github.com/strophe/libstrophe.git"
-
-inherit autotools eutils git-2
+inherit autotools git-r3
 
 DESCRIPTION="A simple, lightweight C library for writing XMPP clients"
 HOMEPAGE="http://strophe.im/libstrophe/"
+EGIT_REPO_URI="https://github.com/strophe/libstrophe.git git://github.com/strophe/libstrophe.git"
 
 LICENSE="MIT GPL-3"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="doc xml"
 
 RDEPEND="xml? ( dev-libs/libxml2 )
 		!xml? ( dev-libs/expat )
-		dev-libs/openssl"
+		dev-libs/openssl:0"
 DEPEND="${RDEPEND}
 		doc? ( app-doc/doxygen )"
 
-S="${WORKDIR}/${P/-/_}"
+S="${WORKDIR}/${P}"
 
 src_prepare() {
+		default
 		eautoreconf
 }
 
 src_configure() {
-		use xml && econf $(use_with xml libxml2)
-		# workaround for building with expat support
-		use xml || econf
+		if use xml; then
+			# defaults to expat otherwise
+			econf $(use_with xml libxml2)
+		else
+			econf
+		fi
 }
-
 src_compile() {
 		emake
-		if use doc; then
-			doxygen || die
-		fi
+		use doc && doxygen
 }
 
 src_install() {
-		einstall
+		emake DESTDIR="${D}" install
 		dodoc LICENSE.txt README.markdown
-		use doc && dohtml -r docs/html/*
+		use doc && dodoc -r docs/html
 }

@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
-inherit autotools eutils
+inherit autotools
 
 DESCRIPTION="A simple, lightweight C library for writing XMPP clients"
 HOMEPAGE="http://strophe.im/libstrophe/"
@@ -22,19 +22,24 @@ DEPEND="${RDEPEND}
 		doc? ( app-doc/doxygen )"
 
 src_prepare() {
+		default
 		eautoreconf
 }
 
 src_configure() {
-		use xml && econf $(use_with xml libxml2)
-		# workaround for building with expat support
-		use xml || econf
+		if use xml; then
+			# defaults to expat otherwise
+			econf $(use_with xml libxml2)
+		else
+			econf
+		fi
+}
+src_compile() {
+		emake
+		use doc && doxygen
 }
 
 src_install() {
 		emake DESTDIR="${D}" install
-		if use doc; then
-			doxygen || die
-		fi
-		use doc && dohtml -r docs/html/*
+		use doc && dodoc -r docs/html
 }
