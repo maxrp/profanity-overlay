@@ -1,5 +1,5 @@
 # profanity-overlay
-A Portage overlay for [Profanity](https://profanity.im) and [libstrophe](http://strophe.im/libstrophe/).
+A Portage overlay for [Profanity](https://profanity.im) and [libmesode](https://github.com/boothj5/libmesode) [libstrophe](http://strophe.im/libstrophe/).
 
 ## Usage
 ```
